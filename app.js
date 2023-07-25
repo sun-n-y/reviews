@@ -1,3 +1,5 @@
+import get from './utils/getElement.js';
+
 const people = [
   {
     image:
@@ -32,3 +34,40 @@ const people = [
       'Cliche praxis shoreditch taxidermy. Iceland tumblr keffiyeh freegan readymade lomo. Copper mug letterpress narwhal squid, air plant fanny pack cornhole green juice brunch.',
   },
 ];
+
+const img = get('.hero-img');
+const name = get('.name');
+const role = get('.role');
+const desc = get('.description');
+const btns = document.querySelectorAll('.btn');
+
+let personValue = 0;
+
+function showperson(value) {
+  img.src = people[value].image;
+  name.textContent = people[value].name;
+  role.textContent = people[value].role;
+  desc.textContent = people[value].description;
+}
+
+btns.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    const click = e.target.classList[0];
+    if (click === 'right') {
+      personValue++;
+    }
+    if (click === 'left') {
+      personValue--;
+    }
+    if (personValue > people.length - 1) {
+      personValue = 0;
+    }
+    if (personValue < 0) {
+      personValue = people.length - 1;
+    }
+    if (click === 'suprise') {
+      personValue = Math.floor(Math.random() * people.length);
+    }
+    showperson(personValue);
+  });
+});
